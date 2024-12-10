@@ -5,7 +5,7 @@
 #include <cassert>
 
 
-void for_each(long *array, long *copied, int size, long (*operation)(long));
+void transform(long *array, long *copied, int size, long (*operation)(long));
 long complex(long i);
 #pragma omp declare target indirect to(complex)
 
@@ -26,7 +26,7 @@ int main() {
 
   auto start = std::chrono::high_resolution_clock::now(); 
 
-  for_each(array, copied, size, func_ptr);
+  transform(array, copied, size, func_ptr);
   
   auto end = std::chrono::high_resolution_clock::now();
 
@@ -62,7 +62,7 @@ long complex(long i){
 
 }
 
-void for_each(long *array, long *copied, int size, long (*func_ptr)(long)){
+void transform(long *array, long *copied, int size, long (*func_ptr)(long)){
 
         
 	#pragma omp target teams distribute parallel for map(to: array[0:size]) map(from: copied[0:size])
