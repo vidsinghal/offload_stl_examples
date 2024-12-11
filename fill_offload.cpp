@@ -8,7 +8,7 @@ void fill(int *array, long size, int val);
 
 int main() {
   
-  long size = 15000000000;	
+  long size = 1000000000;	
   int *array = (int*) malloc(sizeof(int) * size);
   int val = 100000;
   
@@ -36,7 +36,7 @@ int main() {
 void fill(int *array, long size, int val){
 
         
-	#pragma omp target teams distribute parallel for map(tofrom: array[0:size])
+	#pragma omp target teams distribute parallel for map(from: array[0:size])
     	for(long i = 0; i < (size/5000); i++){
 	   for(long j = 0; j < 5000; j++){	
 		array[i*5000 + j] = val;
